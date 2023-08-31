@@ -6,7 +6,7 @@ dashboard "unsupported_apps_using_slack" {
   }
 
   text {
-    value = "The following list are for employees with unsupported Applications & Browsers to connect with Slack starting March 1st, 2023."
+    value = "The following list are for employees with unsupported Applications & Browsers to connect with Slack starting September 1st, 2023."
   }
 
   container {
@@ -16,7 +16,7 @@ dashboard "unsupported_apps_using_slack" {
       width = 4
     }
       table {
-      title = "List of slack applications to be updated, Slack version <= 4.23"
+      title = "List of slack applications to be updated, Slack version <= 4.27"
       sql = query.vanta_list_apps_need_updated_for_slack.sql
     }
   }
@@ -28,7 +28,7 @@ dashboard "unsupported_apps_using_slack" {
       width = 4
     }
       table {
-      title = "List of browsers to be updated, browser versions <= Edge 94, Chrome 93, Firefox 91, Safari 14"
+      title = "List of browsers to be updated, browser versions <= Edge 105, Chrome 105, Firefox 104, Safari 15"
       sql = query.vanta_list_browsers_need_updated_for_slack.sql
     }
   }
@@ -53,7 +53,7 @@ query "vanta_count_employees_slack_apps_need_updated" {
     jsonb_array_elements_text(endpoint_applications) as app
   where
     app SIMILAR TO 'Slack [0-9]%'
-    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('4.24', '.') :: int []
+    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('4.28', '.') :: int []
   EOQ
 }
 
@@ -66,7 +66,7 @@ from
     jsonb_array_elements_text(endpoint_applications) as app
 where
     app similar to 'Safari [0-9]%'
-    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('15.0', '.') :: int []
+    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('16.0', '.') :: int []
 
 UNION
 
@@ -76,7 +76,7 @@ from
     jsonb_array_elements_text(endpoint_applications) as app
 where
     app SIMILAR TO 'Microsoft Edge [0-9]%'
-    and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('95', '.') :: int []
+    and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('106', '.') :: int []
 
 UNION
 
@@ -86,9 +86,9 @@ from
   jsonb_array_elements_text(endpoint_applications) as app
 where
   (app SIMILAR TO 'Firefox [0-9]%'
-  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('95', '.') :: int []) 
+  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('105', '.') :: int []) 
   or (app SIMILAR TO 'Mozilla Firefox [0-9]%'
-  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('95', '.') :: int [])
+  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('105', '.') :: int [])
   
 UNION
 
@@ -98,9 +98,9 @@ from
   jsonb_array_elements_text(endpoint_applications) as app
 where
   (app SIMILAR TO 'Chrome [0-9]%'
-  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('94', '.') :: int []) 
+  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('106', '.') :: int []) 
   or (app SIMILAR TO 'Google Chrome [0-9]%'
-  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('94', '.') :: int [])
+  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('106', '.') :: int [])
 )
   select
       count(*) as "value",
@@ -125,7 +125,7 @@ from
     jsonb_array_elements_text(endpoint_applications) as app
 where
     app SIMILAR TO 'Slack [0-9]%'
-    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('4.24', '.') :: int []
+    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('4.28', '.') :: int []
     order by owner_name;
   EOQ
 }
@@ -143,7 +143,7 @@ from
     jsonb_array_elements_text(endpoint_applications) as app
 where
     app similar to 'Safari [0-9]%'
-    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('15.0', '.') :: int []
+    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('16.0', '.') :: int []
 
 UNION
 
@@ -157,7 +157,7 @@ from
     jsonb_array_elements_text(endpoint_applications) as app
 where
     app SIMILAR TO 'Microsoft Edge [0-9]%'
-    and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('95', '.') :: int []
+    and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('106', '.') :: int []
 
 UNION
 
@@ -171,9 +171,9 @@ from
   jsonb_array_elements_text(endpoint_applications) as app
 where
   (app SIMILAR TO 'Firefox [0-9]%'
-  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('95', '.') :: int []) 
+  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('105', '.') :: int []) 
   or (app SIMILAR TO 'Mozilla Firefox [0-9]%'
-  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('95', '.') :: int [])
+  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('105', '.') :: int [])
   
 UNION
 
@@ -187,9 +187,9 @@ from
   jsonb_array_elements_text(endpoint_applications) as app
 where
   (app SIMILAR TO 'Chrome [0-9]%'
-  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('94', '.') :: int []) 
+  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('106', '.') :: int []) 
   or (app SIMILAR TO 'Google Chrome [0-9]%'
-  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('94', '.') :: int [])
+  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('106', '.') :: int [])
   
   order by owner_name;
   EOQ
@@ -209,7 +209,7 @@ from
     jsonb_array_elements_text(endpoint_applications) as app
 where
     app SIMILAR TO 'Slack [0-9]%'
-    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('4.24', '.') :: int []
+    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('4.28', '.') :: int []
     
 UNION
 
@@ -223,7 +223,7 @@ from
     jsonb_array_elements_text(endpoint_applications) as app
 where
     app similar to 'Safari [0-9]%'
-    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('15.0', '.') :: int []
+    and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('16.0', '.') :: int []
 
 UNION
 
@@ -237,7 +237,7 @@ from
     jsonb_array_elements_text(endpoint_applications) as app
 where
     app SIMILAR TO 'Microsoft Edge [0-9]%'
-    and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('95', '.') :: int []
+    and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('106', '.') :: int []
 
 UNION
 
@@ -251,9 +251,9 @@ from
   jsonb_array_elements_text(endpoint_applications) as app
 where
   (app SIMILAR TO 'Firefox [0-9]%'
-  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('95', '.') :: int []) 
+  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('105', '.') :: int []) 
   or (app SIMILAR TO 'Mozilla Firefox [0-9]%'
-  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('95', '.') :: int [])
+  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('105', '.') :: int [])
   
 UNION
 
@@ -267,9 +267,9 @@ from
   jsonb_array_elements_text(endpoint_applications) as app
 where
   (app SIMILAR TO 'Chrome [0-9]%'
-  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('94', '.') :: int []) 
+  and string_to_array(split_part(app, ' ', 2), '.') :: int [] < string_to_array('106', '.') :: int []) 
   or (app SIMILAR TO 'Google Chrome [0-9]%'
-  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('94', '.') :: int [])
+  and string_to_array(split_part(app, ' ', 3), '.') :: int [] < string_to_array('106', '.') :: int [])
   
   order by owner_name;
   EOQ
